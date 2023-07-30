@@ -1,0 +1,74 @@
+-- --------------------------------------------------------
+-- Hôte:                         127.0.0.1
+-- Version du serveur:           5.7.31 - MySQL Community Server (GPL)
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             11.1.0.6116
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Listage de la structure de la table montagne_zikboutik. categorie
+CREATE TABLE IF NOT EXISTS `categorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS `marque` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+-- Listage des données de la table montagne_zikboutik.categorie : ~6 rows (environ)
+/*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+
+/*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
+
+-- Listage de la structure de la table montagne_zikboutik. produit
+CREATE TABLE IF NOT EXISTS `produit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `modele` varchar(50) DEFAULT NULL,
+  `description` longtext,
+  `chevaux` varchar(50) DEFAULT NULL,
+  `prix` float DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `idMarque` int(11) NOT NULL,
+  `idCategorie` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idCategorie` (`idCategorie`),
+  CONSTRAINT `produit_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`id`),
+  KEY `idMarque` (`idMarque`),
+  CONSTRAINT `produit_ibfk_2` FOREIGN KEY (`idMarque`) REFERENCES `marque` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table montagne_zikboutik.produit : ~4 rows (environ)
+/*!40000 ALTER TABLE `produit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `produit` ENABLE KEYS */;
+
+-- Listage de la structure de la table montagne_zikboutik. utilisateur
+CREATE TABLE IF NOT EXISTS `utilisateur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(30) NOT NULL,
+  `passe` varchar(255) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table montagne_zikboutik.utilisateur : ~2 rows (environ)
+/*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
+INSERT INTO `utilisateur` (`id`, `login`, `passe`, `email`, `isAdmin`) VALUES
+	(1, 'grandChef', 'a227047a05306bce6fa7dc6d8f6dea6e9b01c9b0', 'grandchef@sio.net', 1),
+	(2, 'petitChef', '131c65314283e6861b67188b183fa6dd7363b4c5', 'petitchef@sio.net', 0);
+/*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
